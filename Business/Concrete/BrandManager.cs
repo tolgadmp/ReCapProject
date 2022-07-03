@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -14,39 +16,37 @@ namespace Business.Concrete
         {
             _brandDal = brandDal;
         }
-        public void add(Brand brand)
+        public IResult add(Brand brand)
         {
-        _brandDal.Add(brand);
-        Console.WriteLine("Marka eklendi.");  
+
+            _brandDal.Add(brand);
+            return new SuccessResult(Messages.ItemAdded);
         }
 
-        public void delete(Brand brand)
+        public IResult delete(Brand brand)
         {
             _brandDal.Delete(brand);
-            Console.WriteLine("Marka silindi!");
+            return new SuccessResult(Messages.ItemDeleted);
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>> (_brandDal.GetAll(),Messages.ItemListed);
         }
 
-        public Brand GetById(int id)
+        public IDataResult<Brand> GetById(int id)
         {
-            return _brandDal.Get(c => c.BrandId == id);
+            return new SuccessDataResult<Brand> (_brandDal.Get(c => c.BrandId == id));
         }
 
-        public void update(Brand brand)
+        public IResult update(Brand brand)
         {
-            if (brand.BrandName.Length >= 2)
+            if (brand.BrandName.Length < 2)
             {
-                _brandDal.Update(brand);
-                Console.WriteLine("Marka başarıyla Güncellendi.");
+                return new ErrorResult(Messages.ItemNameInvaild);
             }
-            else
-            {
-                Console.WriteLine($"Lütfen marka isminin uzunluğunu 1 karakterden fazla giriniz. Girdiğiniz marka ismi : {brand.BrandName}");
-            }
+            _brandDal.Update(brand);
+            return new SuccessResult(Messages.ItemAdded);
         }
     }
 }

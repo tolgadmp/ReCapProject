@@ -12,16 +12,25 @@ namespace ConsoleUI
         CarManager carManager = new CarManager(new EfCarDal());
         public void GetCarDetails()
         {
-            foreach (var car in carManager.GetCarDetails())
+            var result = carManager.GetCarDetails();
+            if (result.Success)
             {
-                Console.WriteLine(car.CarName + " / " + car.BrandName + " / " + car.ColorName + " / " + car.DailyPrice);
+                foreach (var car in carManager.GetCarDetails().Data)
+                {
+                    Console.WriteLine(car.CarName + " / " + car.BrandName + " / " + car.ColorName + " / " + car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
         }
         public static void ListCar()
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine(car.CarId + " / " + car.Description);
             }
@@ -58,7 +67,7 @@ namespace ConsoleUI
             {
                 CarManager carManager = new CarManager(new EfCarDal());
                 var silinecekAraba = carManager.GetById(id);
-                carManager.Delete(silinecekAraba);
+                carManager.Delete(silinecekAraba.Data);
             }
             catch (Exception)
             {
@@ -67,7 +76,7 @@ namespace ConsoleUI
             }
         }
 
-        public static void UpdateCar(int id)
+        /*public static void UpdateCar(int id)
         {
             CarManager carManager = new CarManager(new EfCarDal());
             var updateCar = carManager.GetById(id);
@@ -88,8 +97,8 @@ namespace ConsoleUI
             updateCar.ModelYear = carYear;
             updateCar.Description = carDescription;
 
-            carManager.Update(updateCar);
+            carManager.Update(updateCar.Data);
 
-        }
+        }*/
     }
 }
