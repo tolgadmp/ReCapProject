@@ -10,8 +10,14 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
 
-            CarTest carTest = new CarTest();
+            /*CarTest carTest = new CarTest();
             carTest.GetCarDetails();
+
+            UserTest userTest = new UserTest();
+            userTest.addUser();*/
+
+            CustomerTest customerTest = new CustomerTest();
+            customerTest.addCustomer();
 
             
 
