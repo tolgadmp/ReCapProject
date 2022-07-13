@@ -14,6 +14,8 @@ namespace Business.Constants
         public static string MaintenanceTime = "Sistem bakımda";
         public static string CarNotReturned = "Araç henüz iade edilmemiş";
         public static string EmptyItem = "Öğe sistemde mevcut değil";
-        
+        public static string CarCountOfCategoryError = "Bu renk kategorisinde maksimum limite ulaşılmış";
+
+        public static string BrandNameAlreadyExits { get; internal set; }
     }
 }
